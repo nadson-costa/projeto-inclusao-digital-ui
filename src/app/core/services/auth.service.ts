@@ -4,6 +4,7 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../models/usuario.model';
 import { CadastroRequest } from '../models/auth.model';
+import { ApiError } from '../models/api-error.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -50,7 +51,8 @@ export class AuthService {
   }
 
   private tratarErro(error: HttpErrorResponse): Observable<never> {
-    const mensagem = error.error?.mensagem ?? 'Erro inesperado. Tente novamente.';
+    const apiError = error.error as ApiError;
+    const mensagem = apiError?.mensagem ?? 'Erro inesperado. Tente novamente.';
     return throwError(() => new Error(mensagem));
   }
 }
