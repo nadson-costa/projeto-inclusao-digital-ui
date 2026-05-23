@@ -1,0 +1,80 @@
+<div class="min-h-screen bg-bg-light flex flex-col pb-24">
+
+  @if (loading()) {
+    <app-loading />
+  } @else if (erro()) {
+    <div class="mx-6 mt-6 p-4 bg-red-50 rounded-card border border-red-200">
+      <p class="text-red-600 text-sm text-center">{{ erro() }}</p>
+    </div>
+  } @else if (curso()) {
+
+    <div class="bg-bg-dark px-6 pt-10 pb-8 relative">
+      <a routerLink="/cursos"
+         class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 mb-4">
+        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+
+      <span class="inline-block text-xs font-bold text-amber-accent bg-amber-accent/20 px-3 py-1 rounded-full mb-3">
+        {{ curso()!.categoria.nome }}
+      </span>
+      <h1 class="text-white text-2xl font-bold leading-snug">{{ curso()!.nome }}</h1>
+
+      <div class="flex gap-2 mt-4 flex-wrap">
+        <span class="text-xs font-bold bg-white/10 text-white px-3 py-1 rounded-full">
+          {{ curso()!.nivel | titlecase }}
+        </span>
+        <span class="text-xs font-bold bg-white/10 text-white px-3 py-1 rounded-full">
+          {{ curso()!.cargaHoraria }}h de conteúdo
+        </span>
+        <span class="text-xs font-bold bg-white/10 text-white px-3 py-1 rounded-full">
+          {{ aulas().length }} {{ aulas().length === 1 ? 'aula' : 'aulas' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="px-6 pt-6 flex flex-col gap-6">
+
+      <div>
+        <h2 class="text-base font-bold text-bg-dark mb-2">Sobre o curso</h2>
+        <p class="text-text-muted leading-relaxed text-base">{{ curso()!.descricao }}</p>
+      </div>
+
+      @if (aulas().length > 0) {
+        <div>
+          <h2 class="text-base font-bold text-bg-dark mb-3">Aulas</h2>
+          <div class="flex flex-col gap-2">
+            @for (aula of aulas(); track aula.id) {
+              <div class="flex items-center gap-4 bg-white rounded-card p-4 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                <div class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-primary/10 flex-shrink-0">
+                  <span class="text-orange-primary font-bold text-sm">{{ aula.ordem }}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-bg-dark font-semibold text-sm leading-tight">{{ aula.titulo }}</h3>
+                  <div class="flex items-center gap-2 mt-1">
+                    <span class="text-xs text-text-muted">{{ formatoDaAula(aula.formato) }}</span>
+                    @if (aula.duracao) {
+                      <span class="text-xs text-text-muted">· {{ aula.duracao }} min</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+    </div>
+
+  }
+
+</div>
+
+<div class="fixed bottom-0 left-0 right-0 bg-white px-6 py-4 border-t border-border-base">
+  <button
+    class="flex items-center justify-center w-full h-14 rounded-btn font-semibold text-base bg-gradient-to-r from-orange-primary to-orange-dark text-white shadow-md"
+  >
+    Começar curso
+  </button>
+</div>

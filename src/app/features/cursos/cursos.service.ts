@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Curso } from '../../core/models/curso.model';
 import { Categoria } from '../../core/models/categoria.model';
+import { Aula } from '../../core/models/aula.model';
 import { ApiError } from '../../core/models/api-error.model';
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +21,13 @@ export class CursoService {
 
   buscarPorId(id: number): Observable<Curso> {
     return this.http.get<Curso>(`${this.baseUrl}/cursos/${id}`, {
+      withCredentials: true
+    }).pipe(catchError(this.tratarErro));
+  }
+
+  listarAulas(cursoId: number): Observable<Aula[]> {
+    return this.http.get<Aula[]>(`${this.baseUrl}/aulas/curso/${cursoId}`, {
+      params: { status: 'ATIVA' },
       withCredentials: true
     }).pipe(catchError(this.tratarErro));
   }
