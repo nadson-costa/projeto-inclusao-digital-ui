@@ -1,11 +1,10 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
