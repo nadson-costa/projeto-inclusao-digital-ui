@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-bg-light flex flex-col pb-20">
+
+  <div class="bg-bg-dark px-6 pt-10 pb-8 flex flex-col items-center">
+    @if (usuario()?.foto) {
+      <img [src]="usuario()!.foto" [alt]="usuario()!.nomeCompleto"
+           class="w-20 h-20 rounded-full object-cover border-4 border-orange-primary">
+    } @else {
+      <div class="w-20 h-20 rounded-full bg-orange-primary flex items-center justify-center border-4 border-orange-primary/30">
+        <span class="text-white text-2xl font-bold">{{ iniciais }}</span>
+      </div>
+    }
+    <h1 class="text-white text-xl font-bold mt-3">{{ usuario()?.nomeCompleto }}</h1>
+    <span class="text-text-muted text-sm mt-1">{{ usuario()?.email }}</span>
+  </div>
+
+  @if (sucesso()) {
+    <div class="mx-6 mt-4 p-3 bg-green-50 rounded-card border border-green-200">
+      <p class="text-green-700 text-sm text-center font-semibold">Perfil atualizado com sucesso!</p>
+    </div>
+  }
+
+  @if (!modoEdicao()) {
+
+    <div class="flex flex-col gap-4 px-6 pt-6">
+
+      <div class="bg-white rounded-card p-5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+        <h2 class="text-base font-bold text-bg-dark mb-4 text-orange-primary">Dados pessoais</h2>
+        <div class="flex flex-col gap-3">
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">Nome completo</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.nomeCompleto }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">CPF</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.cpf }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">Data de nascimento</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.dataNascimento }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">Telefone</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.telefone }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-card p-5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+        <h2 class="text-base font-bold text-orange-primary mb-4">Contato de emergência</h2>
+        <div class="flex flex-col gap-3">
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">Nome</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.emergenciaNome }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">Telefone</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.emergenciaTelefone }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-text-muted font-semibold uppercase tracking-wide">Parentesco</p>
+            <p class="text-bg-dark font-medium mt-0.5">{{ usuario()?.emergenciaParentesco }}</p>
+          </div>
+        </div>
+      </div>
+
+      <app-button label="Editar perfil" type="ghost" (click)="entrarEdicao()" />
+      <app-button label="Sair" type="danger" (click)="logout()" />
+
+    </div>
+
+  } @else {
+
+    <form [formGroup]="form" (ngSubmit)="salvar()" class="flex flex-col gap-5 px-6 pt-6">
+
+      <h2 class="text-orange-primary font-bold text-lg">Editar perfil</h2>
+
+      <app-input label="Nome completo" formControlName="nomeCompleto" [error]="fieldError('nomeCompleto')" />
+      <app-input label="Telefone" type="tel" placeholder="(00) 00000-0000" formControlName="telefone" [error]="fieldError('telefone')" />
+      <app-input label="Data de nascimento" type="date" formControlName="dataNascimento" [error]="fieldError('dataNascimento')" />
+
+      <h2 class="text-orange-primary font-bold text-lg pt-2">Contato de emergência</h2>
+
+      <app-input label="Nome" formControlName="emergenciaNome" [error]="fieldError('emergenciaNome')" />
+      <app-input label="Telefone" type="tel" formControlName="emergenciaTelefone" [error]="fieldError('emergenciaTelefone')" />
+      <app-input label="Parentesco" formControlName="emergenciaParentesco" [error]="fieldError('emergenciaParentesco')" />
+
+      @if (erro()) {
+        <p class="text-sm text-red-600 text-center">{{ erro() }}</p>
+      }
+
+      <app-button label="Salvar alterações" nativeType="submit" [loading]="loading()" />
+      <app-button label="Cancelar" type="ghost" (click)="cancelar()" />
+
+    </form>
+
+  }
+
+</div>
+
+<app-bottom-nav />
