@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TitleCasePipe } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { Curso } from '../../../core/models/curso.model';
@@ -15,6 +15,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
 })
 export default class CursoDetalheComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly cursoService = inject(CursoService);
 
   curso = signal<Curso | null>(null);
@@ -24,6 +25,11 @@ export default class CursoDetalheComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (!id || isNaN(id)) {
+      this.router.navigate(['/cursos']);
+      return;
+    }
 
     forkJoin({
       curso: this.cursoService.buscarPorId(id),
