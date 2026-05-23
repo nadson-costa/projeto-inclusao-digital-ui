@@ -3,23 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../models/usuario.model';
-
-export interface LoginRequest {
-  email: string;
-  senha: string;
-}
-
-export interface CadastroRequest {
-  nomeCompleto: string;
-  email: string;
-  cpf: string;
-  dataNascimento: string;
-  telefone: string;
-  senha: string;
-  emergenciaNome: string;
-  emergenciaTelefone: string;
-  emergenciaParentesco: string;
-}
+import { CadastroRequest } from '../models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
