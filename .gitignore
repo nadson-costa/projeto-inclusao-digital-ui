@@ -1,5 +1,3 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
 # Compiled output
 /dist
 /tmp
@@ -10,6 +8,15 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+*.log
+
+# Angular
+/.angular/cache
+
+# Environments (nunca commitar credenciais de produção)
+src/environments/environment.prod.ts
+.env
+.env.*
 
 # IDEs and editors
 .idea/
@@ -30,7 +37,6 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
 .sass-cache/
 /connect.lock
 /coverage
@@ -42,3 +48,5 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+/.claude
