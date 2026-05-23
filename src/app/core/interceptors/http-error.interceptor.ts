@@ -12,8 +12,11 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
+        const estaAutenticado = authService.estaAutenticado();
         authService.usuarioAtual.set(null);
-        router.navigate(['/login']);
+        if (estaAutenticado) {
+          router.navigate(['/login']);
+        }
       }
 
       if (error.status === 500 && !environment.production) {
