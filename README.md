@@ -1,59 +1,48 @@
-# VivaDigital
+# Viva Digital — Front-end
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Aplicação mobile-first em Angular para o sistema de inclusão digital Viva Digital.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+- Node.js 20+
+- Back-end rodando em `http://localhost:8080`
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Instalação
 
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Ambiente
 
-```bash
-ng generate --help
+O ambiente de desenvolvimento (`environment.ts`) já está configurado com `http://localhost:8080`.
+
+## Comandos
+
+| Comando | Descrição |
+|---|---|
+| `npm start` | Servidor de desenvolvimento em `localhost:4200` |
+| `npm run build` | Build de produção em `/dist` |
+| `npm run watch` | Build em modo watch |
+| `npm test` | Testes unitários |
+
+## Stack
+
+- Angular 21 · Standalone Components · Signals
+- Tailwind CSS 3
+- Angular Router com lazy loading
+- Autenticação via Cookie HttpOnly
+
+## Estrutura
+
+```
+src/app/
+├── core/          # guards, interceptors, services e models globais
+├── shared/        # componentes reutilizáveis (Button, Input, Card, Loading, BottomNav)
+└── features/      # login, cadastro, dashboard, cursos, perfil
 ```
 
-## Building
+## Observações
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- O back-end precisa ter CORS configurado com `allowCredentials: true` para a origem do front
+- `environment.prod.ts` está no `.gitignore` — não commitar
