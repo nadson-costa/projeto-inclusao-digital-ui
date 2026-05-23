@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  line-height: 1.7;
+  background-color: #FFFBF5;
+  color: #1C1917;
+}
