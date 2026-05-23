@@ -1,0 +1,87 @@
+<div class="min-h-screen bg-bg-light flex flex-col pb-20">
+
+  <div class="bg-bg-dark px-6 pt-10 pb-8">
+    <p class="text-text-muted text-sm">Bem-vindo de volta,</p>
+    <h1 class="text-white text-2xl font-bold mt-1">{{ primeiroNome }}</h1>
+  </div>
+
+  @if (loading()) {
+    <app-loading />
+  } @else if (erro()) {
+    <div class="mx-6 mt-6 p-4 bg-red-50 rounded-card border border-red-200">
+      <p class="text-red-600 text-sm text-center">{{ erro() }}</p>
+    </div>
+  } @else {
+
+    <div class="flex flex-col gap-6 px-6 pt-6">
+
+      @if (cursoDestaque) {
+        <div>
+          <h2 class="text-base font-bold text-bg-dark mb-3">Continuar de onde parou</h2>
+          <a [routerLink]="['/cursos', cursoDestaque.id]"
+             class="block bg-white rounded-card shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden">
+            @if (cursoDestaque.thumbnail) {
+              <img [src]="cursoDestaque.thumbnail" [alt]="cursoDestaque.nome"
+                   class="w-full h-36 object-cover">
+            } @else {
+              <div class="w-full h-36 bg-gradient-to-r from-orange-primary to-orange-dark"></div>
+            }
+            <div class="p-4">
+              <span class="text-xs font-bold text-orange-primary uppercase tracking-wide">
+                {{ cursoDestaque.categoria.nome }}
+              </span>
+              <h3 class="text-bg-dark font-semibold mt-1">{{ cursoDestaque.nome }}</h3>
+              <p class="text-text-muted text-sm mt-1">{{ cursoDestaque.cargaHoraria }}h · {{ cursoDestaque.nivel | titlecase }}</p>
+            </div>
+          </a>
+        </div>
+      }
+
+      @if (categorias().length > 0) {
+        <div>
+          <h2 class="text-base font-bold text-bg-dark mb-3">Explorar categorias</h2>
+          <div class="grid grid-cols-2 gap-3">
+            @for (categoria of categorias(); track categoria.id) {
+              <a routerLink="/cursos"
+                 class="flex flex-col items-center justify-center gap-2 bg-white rounded-card p-4 shadow-[0_4px_20px_rgba(0,0,0,0.08)] min-h-[88px]">
+                <span class="text-2xl">{{ categoria.icone }}</span>
+                <span class="text-sm font-semibold text-bg-dark text-center leading-tight">{{ categoria.nome }}</span>
+              </a>
+            }
+          </div>
+        </div>
+      }
+
+      @if (cursos().length > 1) {
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-base font-bold text-bg-dark">Todos os cursos</h2>
+            <a routerLink="/cursos" class="text-sm text-orange-primary font-semibold">Ver todos</a>
+          </div>
+          <div class="flex flex-col gap-3">
+            @for (curso of cursos().slice(1, 4); track curso.id) {
+              <a [routerLink]="['/cursos', curso.id]"
+                 class="flex items-center gap-4 bg-white rounded-card p-4 shadow-[0_4px_20px_rgba(0,0,0,0.08)]">
+                @if (curso.thumbnail) {
+                  <img [src]="curso.thumbnail" [alt]="curso.nome"
+                       class="w-16 h-16 rounded-input object-cover flex-shrink-0">
+                } @else {
+                  <div class="w-16 h-16 rounded-input bg-gradient-to-br from-orange-primary to-orange-dark flex-shrink-0"></div>
+                }
+                <div class="flex-1 min-w-0">
+                  <span class="text-xs font-bold text-orange-primary">{{ curso.categoria.nome }}</span>
+                  <h3 class="text-bg-dark font-semibold text-sm leading-tight mt-0.5 truncate">{{ curso.nome }}</h3>
+                  <p class="text-text-muted text-xs mt-0.5">{{ curso.cargaHoraria }}h · {{ curso.nivel | titlecase }}</p>
+                </div>
+              </a>
+            }
+          </div>
+        </div>
+      }
+
+    </div>
+  }
+
+</div>
+
+<app-bottom-nav />
