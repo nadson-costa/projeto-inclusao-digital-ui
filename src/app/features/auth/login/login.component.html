@@ -1,0 +1,44 @@
+<div class="min-h-screen bg-bg-dark flex flex-col">
+  <div class="flex-1 flex flex-col items-center justify-center px-6 pt-16 pb-8">
+    <h1 class="text-4xl font-bold text-orange-primary">Viva Digital</h1>
+    <p class="text-white text-lg mt-3 text-center leading-relaxed">
+      Aprenda no seu ritmo,<br>do seu jeito.
+    </p>
+  </div>
+
+  <div class="bg-white rounded-t-[32px] px-6 pt-8 pb-10 shadow-2xl">
+    <h2 class="text-2xl font-bold text-bg-dark mb-6">Entrar</h2>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-5">
+      <app-input
+        label="E-mail"
+        type="email"
+        placeholder="seu@email.com"
+        formControlName="email"
+        [error]="emailError"
+      />
+      <app-input
+        label="Senha"
+        type="password"
+        placeholder="Sua senha"
+        formControlName="senha"
+        [error]="senhaError"
+      />
+
+      @if (erro()) {
+        <p class="text-sm text-red-600 text-center">{{ erro() }}</p>
+      }
+
+      <app-button
+        label="Entrar"
+        nativeType="submit"
+        [loading]="loading()"
+      />
+    </form>
+
+    <p class="text-center text-text-muted mt-6 text-sm">
+      Não tem conta?
+      <a routerLink="/cadastro" class="text-orange-primary font-semibold">Cadastre-se</a>
+    </p>
+  </div>
+</div>
