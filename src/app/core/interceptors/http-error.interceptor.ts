@@ -9,7 +9,9 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  return next(req).pipe(
+  const reqComCredenciais = req.clone({ withCredentials: true });
+
+  return next(reqComCredenciais).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
         const estaAutenticado = authService.estaAutenticado();

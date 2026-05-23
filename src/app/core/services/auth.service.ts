@@ -16,7 +16,7 @@ export class AuthService {
 
   login(email: string, senha: string): Observable<Usuario> {
     return this.http
-      .post<Usuario>(`${this.baseUrl}/auth/login`, { email, senha }, { withCredentials: true })
+      .post<Usuario>(`${this.baseUrl}/auth/login`, { email, senha })
       .pipe(
         tap(usuario => this.usuarioAtual.set(usuario)),
         catchError(this.tratarErro)
@@ -25,7 +25,7 @@ export class AuthService {
 
   cadastro(dados: CadastroRequest): Observable<Usuario> {
     return this.http
-      .post<Usuario>(`${this.baseUrl}/auth/cadastro`, dados, { withCredentials: true })
+      .post<Usuario>(`${this.baseUrl}/auth/cadastro`, dados)
       .pipe(
         tap(usuario => this.usuarioAtual.set(usuario)),
         catchError(this.tratarErro)
@@ -34,7 +34,7 @@ export class AuthService {
 
   logout(): Observable<void> {
     return this.http
-      .post<void>(`${this.baseUrl}/auth/logout`, {}, { withCredentials: true })
+      .post<void>(`${this.baseUrl}/auth/logout`, {})
       .pipe(
         tap(() => this.usuarioAtual.set(null)),
         catchError(this.tratarErro)
@@ -43,7 +43,7 @@ export class AuthService {
 
   carregarUsuarioAtual(): Observable<Usuario> {
     return this.http
-      .get<Usuario>(`${this.baseUrl}/usuarios/me`, { withCredentials: true })
+      .get<Usuario>(`${this.baseUrl}/usuarios/me`)
       .pipe(
         tap(usuario => this.usuarioAtual.set(usuario)),
         catchError(this.tratarErro)

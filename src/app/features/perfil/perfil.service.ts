@@ -21,7 +21,7 @@ export class PerfilService {
 
   editar(dados: UsuarioEditRequest): Observable<Usuario> {
     return this.http
-      .put<Usuario>(`${this.baseUrl}/usuarios/me`, dados, { withCredentials: true })
+      .put<Usuario>(`${this.baseUrl}/usuarios/me`, dados)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           const apiError = error.error as ApiError;

@@ -14,28 +14,24 @@ export class CursoService {
 
   listar(): Observable<Curso[]> {
     return this.http.get<Curso[]>(`${this.baseUrl}/cursos`, {
-      params: { status: 'ATIVO' },
-      withCredentials: true
+      params: { status: 'ATIVO' }
     }).pipe(catchError(this.tratarErro));
   }
 
   buscarPorId(id: number): Observable<Curso> {
-    return this.http.get<Curso>(`${this.baseUrl}/cursos/${id}`, {
-      withCredentials: true
-    }).pipe(catchError(this.tratarErro));
+    return this.http.get<Curso>(`${this.baseUrl}/cursos/${id}`)
+      .pipe(catchError(this.tratarErro));
   }
 
   listarAulas(cursoId: number): Observable<Aula[]> {
     return this.http.get<Aula[]>(`${this.baseUrl}/aulas/curso/${cursoId}`, {
-      params: { status: 'ATIVA' },
-      withCredentials: true
+      params: { status: 'ATIVA' }
     }).pipe(catchError(this.tratarErro));
   }
 
   listarCategorias(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(`${this.baseUrl}/categorias`, {
-      params: { status: 'ATIVA' },
-      withCredentials: true
+      params: { status: 'ATIVA' }
     }).pipe(catchError(this.tratarErro));
   }
 
